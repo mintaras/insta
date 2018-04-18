@@ -14,7 +14,8 @@ export class AuthService {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private router: Router
   ) {
     this.user = this.afAuth.authState.switchMap(user => {
       if (user) {
@@ -28,23 +29,26 @@ export class AuthService {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(email, password)
         .then(user => {
-          return this.updateUserData(user, name)
+          return this.updateUserData(user)
         });
   }
 
   emailLogin(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(user => {
-        return this.updateUserData(user);
-      });
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  private updateUserData(user: any, name: string = 'Guest') {
+  logout() {
+    return this.afAuth.auth.signOut().then(
+      () => this.router.navigate(['/'])
+    );
+  }
+
+  private updateUserData(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: any = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName || name,
+      displayName: user.displayName || "Guest",
       photoURL: user.photoURL || 'https://goo.gl/8kwFW5',
     };
     return userRef.set(userData, { merge: true });

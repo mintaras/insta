@@ -19,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './ui/navbar/navbar.component';
 
 // SERVICES
+import { AuthGuard } from './core/auth.guard';
 import { AuthService } from './core/auth.service';
 
 // MATERIAL
@@ -31,6 +32,10 @@ import {MatInputModule} from '@angular/material/input';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ProfileComponent } from './profile/profile.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { PostComponent } from './post/post.component';
+
 
 
 @NgModule({
@@ -40,7 +45,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     DashboardComponent,
     NavbarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -58,9 +65,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ReactiveFormsModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService, AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

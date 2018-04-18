@@ -6,8 +6,10 @@ body {
   margin: 0;
   font-family: Roboto, sans-serif;
   background-color: #fafafa;
+}
+.app:not(.loggedin) {
   background-image: url('http://subwallpaper.com/Widescreen-Wallpapers/google-wallpaper-hd-resolution-For-Widescreen-Wallpaper.png');
-    color: #fff;
+  color: #fff;
 }
 a {
   color: blue;
