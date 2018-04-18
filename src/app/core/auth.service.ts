@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { switchMap } from 'rxjs/operators';
 
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -8,10 +10,19 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 @Injectable()
 export class AuthService {
 
+  user: Observable<any | null>;
+
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore
-  ) { }
+  ) {
+    this.user = this.afAuth.authState.switchMap(user => {
+      if (user) {
+        return this.afs.doc<any>(`users/${user.uid}`).valueChanges();
+      }
+      return Observable.of(null);
+    });
+   }
 
   emailSignup(name: string, email: string, password: string) {
     return this.afAuth.auth
@@ -19,6 +30,13 @@ export class AuthService {
         .then(user => {
           return this.updateUserData(user, name)
         });
+  }
+
+  emailLogin(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+      .then(user => {
+        return this.updateUserData(user);
+      });
   }
 
   private updateUserData(user: any, name: string = 'Guest') {

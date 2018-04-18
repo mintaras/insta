@@ -6,7 +6,55 @@ body {
   margin: 0;
   font-family: Roboto, sans-serif;
   background-color: #fafafa;
+  background-image: url('http://subwallpaper.com/Widescreen-Wallpapers/google-wallpaper-hd-resolution-For-Widescreen-Wallpaper.png');
+    color: #fff;
+}
+a {
+  color: blue;
+  cursor: pointer;
+  text-decoration: none;
 }
 .container {
-  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 65px);
+}
+
+.auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sign-up-form > * {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+.btnSbm {
+  margin-top: 15px;
+}
+
+.is-danger {
+  color: red;
+}
+.form-actions,
+.form-header {
+  display: flex;
+}
+.fill-space {
+  flex: 1 1 auto;
+}
+
+.form-header-footer {
+    display: flex;
+    align-items: center;
 }

@@ -15,7 +15,6 @@ import { environment } from '../environments/environment';
 
 // COMPONENTS
 import { HomeComponent } from './home/home.component';
-import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './ui/navbar/navbar.component';
 
@@ -29,14 +28,19 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AuthComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,8 @@ import {MatInputModule} from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatExpansionModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
