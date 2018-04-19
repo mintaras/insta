@@ -24,6 +24,10 @@ a {
   height: calc(100vh - 65px);
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 .auth-form {
     max-width: 400px;
     margin: 0 auto;
@@ -59,4 +63,13 @@ a {
 .form-header-footer {
     display: flex;
     align-items: center;
+}
+.grid-list {
+  width: 100%;
+  min-width: 450px;
+  img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
 }

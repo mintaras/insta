@@ -1,35 +1,27 @@
-<h2>Profile</h2>
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Personal data
-      </mat-panel-title>
-      <mat-panel-description>
-        Type your name and age
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-    <mat-form-field>
-      <input matInput placeholder="First name">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Age">
-    </mat-form-field>
-  </mat-expansion-panel>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Self aware panel
-      </mat-panel-title>
-      <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<a mat-button (click)="logout()" *ngIf="(_aS.user | async)">Log out</a>
+<mat-card class="card card-o">
+  <div class="card-header">
+    <div class="header-profile">
+      <div mat-card-avatar (click)="fileUpload.click()" class="header-image" [ngStyle]="{'background-image': 'url('+ user.photoURL +')'}" *ngIf="user"></div>
+      <mat-card-title *ngIf="!editable">{{ user?.displayName }}</mat-card-title>
+      <input type="text" [(ngModel)]="user.displayName" *ngIf="editable" class="input">
+      <input type="file" #fileUpload (change)="detectFile($event)">
+    </div>
+    <span class="spacer"></span>
+    <div class="change-name" *ngIf="!editable">
+      <a mat-mini-fab color="primary" (click)="toggleName()"><mat-icon aria-label="Profile">edit</mat-icon></a>
+    </div>
+    <div class="input-name" *ngIf="editable">
+      <a mat-mini-fab color="primary" (click)="saveName()"><mat-icon aria-label="Profile">done</mat-icon></a>
+    </div>
+  </div>
+</mat-card>
+<mat-card class="card card-photos">
+  <mat-card-content>
+    <mat-grid-list cols="3" rowHeight="100px" class="grid-list">
+      <mat-grid-tile *ngFor="let tile of tiles" rowspan="1" colspan="1" class="tile">
+        <img src="{{tile.url}}" alt="">
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+<a mat-button class="btn-logout" (click)="logout()" *ngIf="(_aS.user | async)">Log out</a>

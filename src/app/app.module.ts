@@ -21,17 +21,19 @@ import { NavbarComponent } from './ui/navbar/navbar.component';
 // SERVICES
 import { AuthGuard } from './core/auth.guard';
 import { AuthService } from './core/auth.service';
+import { UserService } from './_services/user.service';
+import { PostService } from './_services/post.service';
 
 // MATERIAL
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ProfileComponent } from './profile/profile.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PostComponent } from './post/post.component';
@@ -69,7 +71,10 @@ import { PostComponent } from './post/post.component';
     MatGridListModule
   ],
   providers: [
-    AuthService, AuthGuard
+    AuthService,
+    AuthGuard,
+    UserService,
+    PostService
   ],
   bootstrap: [AppComponent]
 })
