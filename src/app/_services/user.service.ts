@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { switchMap } from 'rxjs/operators';
 
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -12,12 +10,12 @@ import { AuthService } from '../core/auth.service';
 export class UserService {
 
   constructor(
-    private _aS: AuthService,
+    private _authS: AuthService,
     private _afs: AngularFirestore
   ) { }
 
   getProfileInfo() {
-    return this._aS.user;
+    return this._authS.user;
   }
 
   getProfile(id: string) {
@@ -44,7 +42,6 @@ export class UserService {
         if (uploadTask.snapshot.downloadURL) {
           upload.url = uploadTask.snapshot.downloadURL;
           this.changeUserProfilePicture(upload, id);
-          return;
         } else {
           console.log('File not uploaded')
         }

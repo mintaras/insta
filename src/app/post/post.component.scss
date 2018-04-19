@@ -1,0 +1,17 @@
+.upload-area {
+  background-color: #fafafa;
+  text-align: center;
+  padding: 40px 0;
+  cursor: pointer;
+  border: 2px dashed #ddd;
+  transition: 250ms;
+  .icon {
+    color: #989898;
+  }
+  &:hover {
+    border-color: #989898;
+  }
+}
+.description {
+  width: 100%;
+}

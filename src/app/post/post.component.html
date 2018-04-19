@@ -1,3 +1,24 @@
-<p>
-  post works!
-</p>
+
+{{posts | json}}
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+  <mat-step [stepControl]="firstFormGroup">
+      <ng-template matStepLabel>Upload photo</ng-template>
+      <div class="upload-area" (click)="fileUpload.click()" [ngStyle]="{'background-image': 'url('+ picture?.photoURL +')'}">
+        <mat-icon class="icon" aria-label="Upload photo">add_a_photo</mat-icon>
+      </div>
+      <input type="file" #fileUpload (change)="detectFile($event)" class="hidden-from-screen">
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Description</ng-template>
+      <mat-form-field class="description">
+        <textarea matInput placeholder="Description" formControlName="secondCtrl" required>
+        </textarea>
+      </mat-form-field>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <mat-icon aria-label="Done">done</mat-icon>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -1,10 +1,12 @@
+<div class="profile">
+<mat-progress-bar mode="determinate" value="{{uploadProgress}}" *ngIf="uploadProgress" class="progress-bar"></mat-progress-bar>
 <mat-card class="card card-o">
   <div class="card-header">
     <div class="header-profile">
       <div mat-card-avatar (click)="fileUpload.click()" class="header-image" [ngStyle]="{'background-image': 'url('+ user.photoURL +')'}" *ngIf="user"></div>
       <mat-card-title *ngIf="!editable">{{ user?.displayName }}</mat-card-title>
       <input type="text" [(ngModel)]="user.displayName" *ngIf="editable" class="input">
-      <input type="file" #fileUpload (change)="detectFile($event)">
+      <input type="file" #fileUpload (change)="detectFile($event)" class="hidden-from-screen">
     </div>
     <span class="spacer"></span>
     <div class="change-name" *ngIf="!editable">
@@ -24,4 +26,6 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
-<a mat-button class="btn-logout" (click)="logout()" *ngIf="(_aS.user | async)">Log out</a>
+<a mat-button class="btn-logout" (click)="logout()" *ngIf="(_authS.user | async)">Log out</a>
+
+</div>

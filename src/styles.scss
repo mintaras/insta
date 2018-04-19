@@ -7,8 +7,13 @@ body {
   font-family: Roboto, sans-serif;
   background-color: #fafafa;
 }
+
+.hidden-from-screen {
+  display: none
+}
+
 .app:not(.loggedin) {
-  background-image: url('http://subwallpaper.com/Widescreen-Wallpapers/google-wallpaper-hd-resolution-For-Widescreen-Wallpaper.png');
+  background-image: url('./assets/bg.jpg');
   color: #fff;
 }
 a {

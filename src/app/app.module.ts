@@ -37,8 +37,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ProfileComponent } from './profile/profile.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PostComponent } from './post/post.component';
-
-
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -68,7 +68,9 @@ import { PostComponent } from './post/post.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
+    MatProgressBarModule,
+    MatStepperModule
   ],
   providers: [
     AuthService,

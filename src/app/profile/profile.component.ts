@@ -21,11 +21,12 @@ export class ProfileComponent implements OnInit {
       {url: 'https://muzenly.com/stories/wp-content/uploads/2016/10/TOP-5-HOLI-MUSIC-FESTIVALS-AROUND-THE-WORLD.jpg'},
     ];
     user: any;
-    editable: boolean = false
+    editable: boolean = false;
+    uploadProgress: number = 0;
 
     constructor(
       public _uS: UserService,
-      public _aS: AuthService
+      public _authS: AuthService
     ) { }
 
   ngOnInit() {
@@ -50,12 +51,12 @@ export class ProfileComponent implements OnInit {
     if (!files || files.length === 0) {
       return;
     }
-    
+
     this._uS.uploadProfilePicture(files[0], this.user.uid);
   }
 
   logout() {
-    return this._aS.logout();
+    return this._authS.logout();
   }
 
 }
