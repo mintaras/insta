@@ -1,4 +1,4 @@
-<div class="app" [class.loggedin]="(_aS.user | async)">
+<div class="app" [class.loggedin]="(_authS.user | async)">
   <app-navbar></app-navbar>
   <div class="container">
     <router-outlet></router-outlet>

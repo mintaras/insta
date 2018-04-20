@@ -1,24 +1,30 @@
 
-{{posts | json}}
-<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper" >
   <mat-step [stepControl]="firstFormGroup">
       <ng-template matStepLabel>Upload photo</ng-template>
-      <div class="upload-area" (click)="fileUpload.click()" [ngStyle]="{'background-image': 'url('+ picture?.photoURL +')'}">
+      <div class="upload-area" [class.bg-active]="(post?.photoURL)" (click)="fileUpload.click()" [ngStyle]="post?.photoURL && {'background-image': 'url('+ post.photoURL +')'}">
         <mat-icon class="icon" aria-label="Upload photo">add_a_photo</mat-icon>
+        <a mat-mini-fab color="warn" class="btn" (click)="deletePhoto($event)" *ngIf="(post?.photoURL)"><mat-icon class="icon" aria-label="Delete photo">delete</mat-icon></a>
       </div>
       <input type="file" #fileUpload (change)="detectFile($event)" class="hidden-from-screen">
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup">
+  <mat-step [completed]="(post?.photoURL)">
       <ng-template matStepLabel>Description</ng-template>
       <mat-form-field class="description">
-        <textarea matInput placeholder="Description" formControlName="secondCtrl" required>
-        </textarea>
+        <textarea matInput [(ngModel)]="description" placeholder="Description" value="{{post.description}}"></textarea>
       </mat-form-field>
-    </form>
+      <div>
+        <button mat-button matStepperNext class="btn-next" (click)="updateDescription()">Next</button>
+      </div>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <mat-icon aria-label="Done">done</mat-icon>
+    <div class="step-share">
+      <ng-template matStepLabel>Share</ng-template>
+      <img *ngIf="post.photoURL" src="{{post.photoURL}}" alt="{{post.imageName}}">
+      <div class="description">{{post.description}}</div>
+      <div class="buttons">
+        <button mat-raised-button color="primary" (click)="sharePost()">Share</button>
+      </div>
+    </div>
   </mat-step>
 </mat-horizontal-stepper>

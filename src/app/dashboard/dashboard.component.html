@@ -1,5 +1,5 @@
 <mat-grid-list cols="3" rowHeight="150px" class="grid-list">
-  <mat-grid-tile *ngFor="let tile of tiles" rowspan="1" colspan="1" class="tile">
-    <img src="{{tile.url}}" alt="">
+  <mat-grid-tile *ngFor="let post of posts" rowspan="1" colspan="1" class="tile">
+    <img src="{{post.photoURL}}" alt="{{post.imageName}}" class="post" (click)="openPost(post)">
   </mat-grid-tile>
 </mat-grid-list>

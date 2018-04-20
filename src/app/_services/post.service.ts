@@ -9,12 +9,14 @@ import { AuthService } from '../core/auth.service';
 @Injectable()
 export class PostService {
 
+  private postsCollection: AngularFirestoreCollection<any>;
+
   constructor(
     private _aS: AuthService,
     private _afs: AngularFirestore
   ) { }
 
-  uploadPicture(upload, uid) {
+  uploadPicture(upload, id) {
     const storageRef = firebase.storage().ref();
     const imageName = new Date().getTime();
     const uploadTask = storageRef.child(`posts/${imageName}`).put(upload);
@@ -24,12 +26,15 @@ export class PostService {
         upload.progress = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.totalBytes) * 100
       },
       (error) => {
-        console.log(error)
+        console.error(error)
       },
       () => {
         if (uploadTask.snapshot.downloadURL) {
-          upload.url = uploadTask.snapshot.downloadURL;
-          this.updatePicture(upload, uid);
+          let newPicture = {
+            photoURL: uploadTask.snapshot.downloadURL,
+            imageName: imageName
+          }
+          this.updatePicture(newPicture, id);
           return;
         } else {
           console.log('File not uploaded')
@@ -42,8 +47,35 @@ export class PostService {
     return this._afs.doc<any>(`posts/${uid}`);
   }
 
-  private updatePicture(upload, uid) {
-    this.getPost(uid).update({'photoURL': upload.url});
+  getPosts() {
+    this.postsCollection = this._afs.collection('posts', post => post.where('status', '==', 'active'));
+    return this.postsCollection.snapshotChanges().map(
+    (posts) =>{
+      return posts.map(
+        (post) => {
+          const data = post.payload.doc.data();
+          return {
+            id: post.payload.doc.id,
+            description: data.description,
+            photoURL: data.photoURL,
+            imageName: data.imageName,
+          }
+        }
+      );
+    }
+  );
+  }
+
+  private updatePicture(upload, id) {
+    this.getPost(id).update(upload);
+  }
+
+  updateDescription(description = '', id) {
+    this.getPost(id).update({"description": description});
+  }
+
+  sharePost(id) {
+      return this.getPost(id).update({"status": "active"});
   }
 
   createPostPicture(uid) {
@@ -52,6 +84,18 @@ export class PostService {
         "status": "draft"
       };
       return this._afs.collection('posts').add(picture);
+  }
+
+  deletePhoto(id: string, pictureName: string) {
+    this.getPost(id).update({
+      "photoURL": "",
+      "imageName": ""
+    }).then(
+      () => {
+        const storageRef = firebase.storage().ref();
+        storageRef.child(`posts/${pictureName}`).delete();
+      }
+    );
   }
 
 }

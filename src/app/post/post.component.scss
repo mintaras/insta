@@ -5,12 +5,43 @@
   cursor: pointer;
   border: 2px dashed #ddd;
   transition: 250ms;
+  min-height: 150px;
+  display: flex;
+    align-items: center;
+    justify-content: center;
   .icon {
     color: #989898;
   }
   &:hover {
     border-color: #989898;
   }
+  &.bg-active {
+    border: none;
+    background-size: cover;
+    .btn {
+      margin-left: 10px;
+    }
+    .icon, .btn {
+      display: none;
+    }
+    &:hover .icon, &:hover .btn {
+      display: block;
+      color: #fff;
+    }
+  }
+}
+.step-share {
+  img {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+.buttons {
+  margin-top: 15px;
+  text-align: center;
+}
+.btn-next {
+  float: right;
 }
 .description {
   width: 100%;

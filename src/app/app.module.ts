@@ -39,6 +39,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { PostComponent } from './post/post.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -70,7 +72,8 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatExpansionModule,
     MatGridListModule,
     MatProgressBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule
   ],
   providers: [
     AuthService,

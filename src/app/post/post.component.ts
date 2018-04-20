@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { PostService } from '../_services/post.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
+import { PostService } from '../_services/post.service';
 import { AuthService } from '../core/auth.service';
+
 
 @Component({
   selector: 'app-post',
@@ -10,23 +12,51 @@ import { AuthService } from '../core/auth.service';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
-  isLinear = false;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   picture: any;
+  description: any;
+  id: string;
+  isLinear = true;
+  posts: any;
+  post: any = {
+    photoURL: '',
+    description: ''
+  };
 
   constructor(
     private _formBuilder: FormBuilder,
     private _pS: PostService,
-    private _authS: AuthService
+    private _authS: AuthService,
+    private router: Router,
+    private aR: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+    this.id = this.aR.snapshot.params['id'];
+    if (this.id) {
+      this._pS.getPost(this.id).valueChanges()
+        .subscribe(post => this.post = post);
+    } else {
+      this.createPost();
+    }
+  }
+
+  createPost() {
+    this._authS.user.subscribe(user => {
+      this._pS.createPostPicture(user.uid).then(post => {
+        return this.router.navigate(['post/', post.id]);
+      });
+    })
+  }
+
+  updateDescription() {
+    this._pS.updateDescription(this.post.description, this.id);
+  }
+
+  sharePost() {
+    this._pS.sharePost(this.id).then(post => {
+      return this.router.navigate(['/dashboard']);
     });
   }
 
@@ -35,16 +65,16 @@ export class PostComponent implements OnInit {
     const files = selectFile;
 
     if (!files || files.length === 0) {
-      console.log('No files found');
+      console.warn('No files found');
       return;
     }
-    this._authS.user.subscribe(user => {
-      this._pS.createPostPicture(user.uid).then(data => {
-        this._pS.uploadPicture(files[0], data.id);
-        this.picture = this._pS.getPost(data.id).valueChanges();
-      }
-      );
-    })
+    this._pS.uploadPicture(files[0], this.id);
+    event.target['value'] = "";
+  }
+
+  deletePhoto(event: any) {
+    event.stopPropagation();
+    this._pS.deletePhoto(this.id, this.post.imageName);
   }
 
 }
