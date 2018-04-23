@@ -1,0 +1,13 @@
+<div class="post">
+  <div class="post-image" [ngStyle]="{'background-image': 'url('+ data.photoURL +')'}"></div>
+  <div class="post-meta">
+    <div class="author">
+      <img src="{{ (data.user | async)?.photoURL }}" alt="profile photo">
+      <a [routerLink]="['profile', data.user_id]">{{ (data.user | async)?.displayName }}</a>
+    </div>
+    <div class="description">
+      {{data.description}}
+    </div>
+    <app-post-comments></app-post-comments>
+  </div>
+</div>

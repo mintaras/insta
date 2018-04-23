@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { UserService } from '../_services/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -23,16 +24,25 @@ export class ProfileComponent implements OnInit {
     user: any;
     editable: boolean = false;
     uploadProgress: number = 0;
+    id: string;
 
     constructor(
-      public _uS: UserService,
-      public _authS: AuthService
+      private _uS: UserService,
+      public _authS: AuthService,
+      private aR: ActivatedRoute
     ) { }
 
   ngOnInit() {
-    this._uS.getProfileInfo().subscribe(
-      user => this.user = user
-    );
+    this.id = this.aR.snapshot.params['id'];
+    if (this.id) {
+      this._uS.getProfileInfo().subscribe(
+        user => this.user = user
+      );
+    } else {
+      this._uS.getProfile(this.id).valueChanges().subscribe(
+        user => this.user = user
+      );
+    }
   }
 
   toggleName() {

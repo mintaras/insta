@@ -1,0 +1,40 @@
+.post-comments{
+  margin-top: 20px;
+  .new-comment {
+    display: flex;
+    position: relative;
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+    .btn {
+      position: absolute;
+      background: transparent;
+      color: blue;
+      border: 0;
+      right: 10px;
+      top: 7px;
+      cursor: pointer;
+    }
+  }
+  .comments-list{
+    margin-top: 20px;
+    .comment {
+      font-size: 12px;
+      .author-name {
+        font-weight: bold;
+      }
+    }
+  }
+  .input {
+    border-radius: 20px;
+    outline: 0;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    font-size: 12px;
+    width: 100%;
+  }
+}

@@ -1,12 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
+* {
+  box-sizing: border-box;
+}
 body {
   padding: 0;
   margin: 0;
   font-family: Roboto, sans-serif;
   background-color: #fafafa;
 }
+
+button:focus {outline:0;}
 
 .hidden-from-screen {
   display: none
@@ -77,4 +82,11 @@ a {
     object-fit: cover;
     height: 100%;
   }
+}
+
+.post-dialog {
+  margin: 0 auto !important;
+}
+.post-dialog .mat-dialog-container {
+  padding: 0;
 }

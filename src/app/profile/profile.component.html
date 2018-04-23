@@ -9,10 +9,10 @@
       <input type="file" #fileUpload (change)="detectFile($event)" class="hidden-from-screen">
     </div>
     <span class="spacer"></span>
-    <div class="change-name" *ngIf="!editable">
+    <div class="change-name" *ngIf="user?.uid === (_authS.user | async)?.uid && editable">
       <a mat-mini-fab color="primary" (click)="toggleName()"><mat-icon aria-label="Profile">edit</mat-icon></a>
     </div>
-    <div class="input-name" *ngIf="editable">
+    <div *ngIf="user?.uid === (_authS.user | async)?.uid && editable" class="input-name">
       <a mat-mini-fab color="primary" (click)="saveName()"><mat-icon aria-label="Profile">done</mat-icon></a>
     </div>
   </div>

@@ -5,6 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import { AuthService } from '../core/auth.service';
+import { UserService } from '../_services/user.service';
 
 @Injectable()
 export class PostService {
@@ -13,7 +14,8 @@ export class PostService {
 
   constructor(
     private _aS: AuthService,
-    private _afs: AngularFirestore
+    private _afs: AngularFirestore,
+    private _uS: UserService
   ) { }
 
   uploadPicture(upload, id) {
@@ -54,11 +56,14 @@ export class PostService {
       return posts.map(
         (post) => {
           const data = post.payload.doc.data();
+          const user = this._uS.getProfile(data.user_uid).valueChanges();
+
           return {
             id: post.payload.doc.id,
+            user_id: data.user_uid,
             description: data.description,
             photoURL: data.photoURL,
-            imageName: data.imageName,
+            user: user
           }
         }
       );
@@ -81,7 +86,10 @@ export class PostService {
   createPostPicture(uid) {
       const picture = {
         "user_uid": uid,
-        "status": "draft"
+        "status": "draft",
+        "description": '',
+        "created_at": new Date().getTime(),
+        "updated_at": new Date().getTime()
       };
       return this._afs.collection('posts').add(picture);
   }

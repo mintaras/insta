@@ -1,18 +1,18 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <a class="logo" routerLink="/" *ngIf="!(_aS.user | async)">
+    <a class="logo" routerLink="/" *ngIf="!(_authS.user | async)">
       <mat-icon aria-label="Insta" class="icon">landscape</mat-icon>
       <span>Insta</span>
     </a>
-    <a class="logo" routerLink="/dashboard" *ngIf="(_aS.user | async)">
+    <a class="logo" routerLink="/dashboard" *ngIf="(_authS.user | async)">
       <mat-icon aria-label="Insta" class="icon">landscape</mat-icon>
       <span>Insta</span>
     </a>
     <span class="spacer"></span>
-    <a mat-button routerLink="/register" *ngIf="!(_aS.user | async)">Sign up</a>
-    <a mat-icon-button routerLink="/post/new" *ngIf="(_aS.user | async)"><mat-icon aria-label="add" class="icon">add
+    <a mat-button routerLink="/register" *ngIf="!(_authS.user | async)">Sign up</a>
+    <a mat-icon-button routerLink="/post/new" *ngIf="(_authS.user | async)"><mat-icon aria-label="add" class="icon">add
 </mat-icon></a>
-    <a mat-button routerLink="/dashboard" *ngIf="(_aS.user | async)">{{ (_aS.user | async)?.displayName }}</a>
-    <a mat-icon-button routerLink="/profile" *ngIf="(_aS.user | async)"><mat-icon aria-label="Profile">account_circle</mat-icon></a>
+    <a mat-button routerLink="/dashboard" *ngIf="(_authS.user | async)">{{ (_authS.user | async)?.displayName }}</a>
+    <a mat-icon-button *ngIf="(_authS.user | async)" routerLink="../profile/{{(_authS.user | async)?.uid}}"><mat-icon aria-label="Profile">account_circle</mat-icon></a>
   </mat-toolbar-row>
 </mat-toolbar>

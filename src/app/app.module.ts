@@ -17,12 +17,14 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './ui/navbar/navbar.component';
+import { PostDialogComponent } from './post-dialog//post-dialog.component';
 
 // SERVICES
 import { AuthGuard } from './core/auth.guard';
 import { AuthService } from './core/auth.service';
 import { UserService } from './_services/user.service';
 import { PostService } from './_services/post.service';
+import { CommentService } from './_services/comment.service';
 
 // MATERIAL
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -40,6 +42,7 @@ import { PostComponent } from './post/post.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PostCommentsComponent } from './post-comments/post-comments.component';
 
 
 @NgModule({
@@ -51,7 +54,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    PostComponent
+    PostComponent,
+    PostDialogComponent,
+    PostCommentsComponent
+  ],
+  entryComponents: [
+    PostDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +87,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     AuthService,
     AuthGuard,
     UserService,
-    PostService
+    PostService,
+    CommentService
   ],
   bootstrap: [AppComponent]
 })
