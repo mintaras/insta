@@ -1,4 +1,4 @@
-<mat-card class="auth-form">
+<mat-card class="auth-form" *ngIf="(_authS.user | async)">
   <mat-card-content>
     <div class="sign-up-form">
       <div class="form-header">

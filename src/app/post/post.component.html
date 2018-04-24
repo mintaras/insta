@@ -21,7 +21,7 @@
     <div class="step-share">
       <ng-template matStepLabel>Share</ng-template>
       <img *ngIf="post.photoURL" src="{{post.photoURL}}" alt="{{post.imageName}}">
-      <div class="description">{{post.description}}</div>
+      <div class="description">{{description || post.description}}</div>
       <div class="buttons">
         <button mat-raised-button color="primary" (click)="sharePost()">Share</button>
       </div>

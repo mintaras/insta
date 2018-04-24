@@ -2,6 +2,20 @@
   display: flex;
   position: relative;
   height: 100%;
+  .post-image {
+    position: relative;
+  }
+  .action-like {
+    font-size: 32px;
+    color: #fff;
+    bottom: 15px;
+    right: 15px;
+    position: absolute;
+    cursor: pointer;
+    &:hover, &.liked {
+      color: red;
+    }
+  }
   .post-meta {
     padding: 20px;
     margin-bottom: 20px;
@@ -21,8 +35,12 @@
         outline: 0;
       }
     }
-    .description {
+    .description, .likes {
         font-size: 14px;
+    }
+    .likes {
+        font-weight: bold;
+        margin-bottom: 5px;
     }
   }
 }

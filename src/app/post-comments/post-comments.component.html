@@ -1,12 +1,12 @@
 <div class="post-comments">
   <div class="new-comment">
-    <img src="{{ (post.user | async)?.photoURL }}" alt="profile photo">
+    <img src="{{ user?.photoURL }}" alt="profile photo">
     <input type="text" class="input" [(ngModel)]="comment" placeholder="Add a comment..">
-    <button type="button" class="btn" name="button" (click)="addComment(post.id, post.user_id)">Post</button>
+    <button type="button" class="btn" name="button" (click)="addComment(post.id, user.uid)">Post</button>
   </div>
   <div class="comments-list">
     <div class="comment" *ngFor="let comment of comments">
-      <span class="author-name">@{{ (comment.user | async)?.displayName }}</span>
+      <span class="author-name">{{ (comment.user | async)?.displayName }}</span>
       <span class="text">{{comment.text}}</span>
     </div>
   </div>

@@ -1,9 +1,15 @@
 <div class="post">
-  <div class="post-image" [ngStyle]="{'background-image': 'url('+ data.photoURL +')'}"></div>
+  <div class="post-image" [ngStyle]="{'background-image': 'url('+ data.photoURL +')'}">
+    <mat-icon aria-label="Like" class="action-like" *ngIf="!liked" (click)="updatePostLikes(data.id, 'inc', user.uid)">favorite_border</mat-icon>
+    <mat-icon aria-label="Like" class="action-like liked" *ngIf="liked" (click)="updatePostLikes(data.id, 'dec', user.uid)">favorite</mat-icon>
+  </div>
   <div class="post-meta">
     <div class="author">
       <img src="{{ (data.user | async)?.photoURL }}" alt="profile photo">
       <a [routerLink]="['profile', data.user_id]">{{ (data.user | async)?.displayName }}</a>
+    </div>
+    <div class="likes">
+      {{ data.likes }} likes
     </div>
     <div class="description">
       {{data.description}}

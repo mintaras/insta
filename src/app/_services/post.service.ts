@@ -11,6 +11,8 @@ import { UserService } from '../_services/user.service';
 export class PostService {
 
   private postsCollection: AngularFirestoreCollection<any>;
+  likes: number = 0;
+  post: any;
 
   constructor(
     private _aS: AuthService,
@@ -50,9 +52,13 @@ export class PostService {
   }
 
   getPosts() {
-    this.postsCollection = this._afs.collection('posts', post => post.where('status', '==', 'active'));
+    this.postsCollection = this._afs.collection('posts', post => {
+      return post.where('status', '==', 'active')
+        .orderBy('created_at', 'desc')
+      }
+    );
     return this.postsCollection.snapshotChanges().map(
-    (posts) =>{
+    (posts) => {
       return posts.map(
         (post) => {
           const data = post.payload.doc.data();
@@ -63,6 +69,7 @@ export class PostService {
             user_id: data.user_uid,
             description: data.description,
             photoURL: data.photoURL,
+            likes: data.likes,
             user: user
           }
         }
@@ -88,6 +95,7 @@ export class PostService {
         "user_uid": uid,
         "status": "draft",
         "description": '',
+        "likes": 0,
         "created_at": new Date().getTime(),
         "updated_at": new Date().getTime()
       };
@@ -104,6 +112,33 @@ export class PostService {
         storageRef.child(`posts/${pictureName}`).delete();
       }
     );
+  }
+
+  updatePostLikes(id, action, user_id): void {
+    const postDoc = this.getPost(id);
+    postDoc.valueChanges().subscribe(post => {
+      this.likes = post.likes;
+    });
+
+    if (action === 'dec') {
+
+      postDoc.collection(`likes`, like => {
+        return like.where('user_id', '==', user_id)
+      })[0].delete().then(() => postDoc.update({"likes": --this.likes}));
+
+    } else if (action === 'inc') {
+
+      postDoc.collection('likes').add({
+        "user_id": user_id
+      }).then(() => postDoc.update({"likes": ++this.likes}));
+
+    }
+  }
+
+  isPostLikedByUser(post_id, user_id) {
+    return this.getPost(post_id).collection(`likes`, like => {
+      return like.where('user_id', '==', user_id)
+    }).valueChanges()
   }
 
 }

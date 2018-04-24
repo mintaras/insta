@@ -19,7 +19,8 @@ export class CommentService {
   ) { }
 
     getComments(post_id) {
-      this.commentsCollection = this._afs.collection('comments', comment => comment.where('post_id', '==', post_id));
+      let postDoc = this._afs.doc<any>(`post/${post_id}`);
+      this.commentsCollection = postDoc.collection('comments', comment => comment.where('post_id', '==', post_id));
       return this.commentsCollection.snapshotChanges().map(
       (comments) =>{
         return comments.map(
@@ -41,7 +42,8 @@ export class CommentService {
   }
 
   addComment(post_id, user_id, comment) {
-      return this._afs.collection('comments').add({
+      let postDoc = this._afs.doc<any>(`post/${post_id}`);
+      return postDoc.collection('comments').add({
         "post_id": post_id,
         "user_id": user_id,
         "text": comment,

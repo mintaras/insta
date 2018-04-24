@@ -17,9 +17,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._pS.getPosts().subscribe(posts => {
-      this.posts = posts
-    });
+    this.posts = this._pS.getPosts();
   }
 
   openPost(post): void {

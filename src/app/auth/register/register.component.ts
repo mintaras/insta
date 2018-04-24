@@ -38,12 +38,15 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private _aS: AuthService,
+    private _authS: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.buildForm();
+    if (this._authS.user) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   buildForm() {
@@ -93,7 +96,7 @@ export class RegisterComponent implements OnInit {
   }
 
   signUp() {
-    this._aS.emailSignup(
+    this._authS.emailSignup(
       this.userForm.value['name'],
       this.userForm.value['email'],
       this.userForm.value['password']
