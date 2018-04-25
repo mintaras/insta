@@ -7,13 +7,18 @@
     z-index: 1;
   }
 }
-.btn-logout {
-  margin: 10px 0 0 3px;
+.actions {
+  display: flex;
+  justify-content: space-between;
+}
+.btn-edit-profile {
+  .icon {
+    margin-left: 5px;
+  }
 }
 .card {
-  min-width: 400px;
-  max-width: 400px;
   width: 100%;
+  margin-bottom: 40px;
 }
 .card-header {
   display: flex;

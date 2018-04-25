@@ -12,6 +12,7 @@ export class ProfileComponent implements OnInit {
 
     user: any;
     editable: boolean = false;
+    profileSettingsActive: boolean = false;
     uploadProgress: number = 0;
     id: string;
 
@@ -36,6 +37,10 @@ export class ProfileComponent implements OnInit {
 
   toggleName() {
     this.editable = !this.editable
+  }
+
+  toggleProfileSettings() {
+    this.profileSettingsActive = !this.profileSettingsActive
   }
 
   saveName() {

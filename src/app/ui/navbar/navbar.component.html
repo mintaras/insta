@@ -12,7 +12,7 @@
     <a mat-button routerLink="/register" *ngIf="!(_authS.user | async)">Sign up</a>
     <a mat-icon-button routerLink="/post/new" *ngIf="(_authS.user | async)"><mat-icon aria-label="add" class="icon">add
 </mat-icon></a>
-    <a mat-button routerLink="/dashboard" *ngIf="(_authS.user | async)">{{ (_authS.user | async)?.displayName }}</a>
+    <a mat-button routerLink="/dashboard" *ngIf="(_authS.user | async)">Feed</a>
     <a mat-icon-button *ngIf="(_authS.user | async)" routerLink="../profile/{{(_authS.user | async)?.uid}}"><mat-icon aria-label="Profile">account_circle</mat-icon></a>
   </mat-toolbar-row>
 </mat-toolbar>

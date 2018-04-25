@@ -1,6 +1,8 @@
 <div class="post-comments">
   <div class="new-comment">
-    <img src="{{ user?.photoURL }}" alt="profile photo">
+    <div class="profile-photo">
+      <img src="{{ user?.photoURL }}" alt="profile photo">
+    </div>
     <input type="text" class="input" [(ngModel)]="comment" placeholder="Add a comment..">
     <button type="button" class="btn" name="button" (click)="addComment(post.id, user.uid)">Post</button>
   </div>

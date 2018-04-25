@@ -51,12 +51,19 @@ export class PostService {
     return this._afs.doc<any>(`posts/${uid}`);
   }
 
-  getPosts() {
+  getPosts(user_id = '') {
     this.postsCollection = this._afs.collection('posts', post => {
-      return post.where('status', '==', 'active')
-        .orderBy('created_at', 'desc')
-      }
-    );
+        if (user_id !== '') {
+          return post
+            .where('status', '==', 'active')
+            .where('user_uid', '==', user_id)
+            .orderBy('created_at', 'desc')
+        } else {
+          return post.where('status', '==', 'active')
+            .orderBy('created_at', 'desc')
+        }
+    });
+
     return this.postsCollection.snapshotChanges().map(
     (posts) => {
       return posts.map(
@@ -122,9 +129,18 @@ export class PostService {
 
     if (action === 'dec') {
 
-      postDoc.collection(`likes`, like => {
+      let likesCollection = postDoc.collection(`likes`, like => {
         return like.where('user_id', '==', user_id)
-      })[0].delete().then(() => postDoc.update({"likes": --this.likes}));
+      });
+
+      likesCollection.snapshotChanges().map(likes => {
+        return likes.map(like => {
+          const like_id = like.payload.doc.id;
+          this._afs.doc(`posts/${id}/likes/${like_id}`).delete()
+            .then(() => postDoc.update({"likes": --this.likes}));
+          return;
+        });
+      }).subscribe();
 
     } else if (action === 'inc') {
 

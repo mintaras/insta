@@ -1,4 +1,8 @@
-<div class="profile">
+<div class="actions">
+  <a mat-button class="btn-logout" (click)="logout()" *ngIf="(_authS.user | async)">Log out</a>
+  <a mat-button class="btn-edit-profile" (click)="toggleProfileSettings()">Edit profile<mat-icon class="icon" aria-label="Settings">settings</mat-icon></a>
+</div>
+<div class="profile" *ngIf="profileSettingsActive">
 <mat-progress-bar mode="determinate" value="{{uploadProgress}}" *ngIf="uploadProgress" class="progress-bar"></mat-progress-bar>
 <mat-card class="card card-o">
   <div class="card-header">
@@ -26,6 +30,5 @@
     </mat-grid-list>
   </mat-card-content>
 </mat-card>
-<a mat-button class="btn-logout" (click)="logout()" *ngIf="(_authS.user | async)">Log out</a>
-
 </div>
+<app-dashboard></app-dashboard>

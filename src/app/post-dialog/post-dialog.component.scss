@@ -20,19 +20,29 @@
     padding: 20px;
     margin-bottom: 20px;
     width: 40%;
+    .btn-delete-post {
+      position: absolute;
+      right: 20px;
+      color: #ddd;
+    }
     .author {
       display: flex;
       align-items: center;
       margin-bottom: 20px;
-      img {
+      .photo {
         width: 32px;
         height: 32px;
-        border-radius: 32px;
-        object-fit: cover;
         margin-right: 10px;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 32px;
+          object-fit: cover;
+        }
       }
       a {
         outline: 0;
+        color: #000;
       }
     }
     .description, .likes {

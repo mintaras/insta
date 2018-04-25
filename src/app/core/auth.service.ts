@@ -49,7 +49,7 @@ export class AuthService {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName || "Guest",
-      photoURL: user.photoURL || 'https://goo.gl/8kwFW5',
+      photoURL: user.photoURL || 'https://goo.gl/8kwFW5'
     };
     return userRef.set(userData, { merge: true });
   }

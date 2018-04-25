@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { PostService } from '../_services/post.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { PostDialogComponent } from '../post-dialog/post-dialog.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,14 +11,24 @@ import { PostDialogComponent } from '../post-dialog/post-dialog.component';
 })
 export class DashboardComponent implements OnInit {
   posts: any;
+  user_id: string;
 
   constructor(
     public dialog: MatDialog,
-    private _pS: PostService
+    private _pS: PostService,
+    private aR: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.posts = this._pS.getPosts();
+
+    this.user_id = this.aR.snapshot.params['id'];
+
+    if (this.user_id) {
+      this.posts = this._pS.getPosts(this.user_id);
+    } else {
+      this.posts = this._pS.getPosts();
+    }
+
   }
 
   openPost(post): void {

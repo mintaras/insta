@@ -53,4 +53,28 @@ export class UserService {
     this.getProfile(uid).update({'photoURL': upload.url});
   }
 
+  updateUserLikes(user_id, action, post_id) {
+    if (action === 'dec') {
+
+      let likesCollection = this.getProfile(post_id).collection(`likes`, like => {
+        return like.where('post_id', '==', post_id)
+      });
+
+      likesCollection.snapshotChanges().map(likes => {
+        return likes.map(like => {
+          const like_id = like.payload.doc.id;
+          this._afs.doc(`users/${user_id}/likes/${like_id}`).delete();
+          return;
+        });
+      }).subscribe();
+
+    } else if (action === 'inc') {
+
+      this.getProfile(user_id).collection('likes').add({
+        "post_id": post_id
+      });
+
+    }
+  }
+
 }
