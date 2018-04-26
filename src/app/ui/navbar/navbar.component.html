@@ -9,10 +9,14 @@
       <span>Insta</span>
     </a>
     <span class="spacer"></span>
-    <a mat-button routerLink="/register" *ngIf="!(_authS.user | async)">Sign up</a>
-    <a mat-icon-button routerLink="/post/new" *ngIf="(_authS.user | async)"><mat-icon aria-label="add" class="icon">add
-</mat-icon></a>
-    <a mat-button routerLink="/dashboard" *ngIf="(_authS.user | async)">Feed</a>
-    <a mat-icon-button *ngIf="(_authS.user | async)" routerLink="../profile/{{(_authS.user | async)?.uid}}"><mat-icon aria-label="Profile">account_circle</mat-icon></a>
+    <nav *ngIf="(_authS.user | async)">
+      <a mat-icon-button routerLink="/post/new">
+        <mat-icon aria-label="add" class="icon">add</mat-icon>
+      </a>
+      <a mat-button routerLink="/dashboard" class="btn-feed">Feed</a>
+      <a mat-icon-button routerLink="../profile/{{(_authS.user | async)?.uid}}">
+        <mat-icon aria-label="Profile">account_circle</mat-icon>
+      </a>
+    </nav>
   </mat-toolbar-row>
 </mat-toolbar>

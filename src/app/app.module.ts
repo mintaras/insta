@@ -43,6 +43,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatDialogModule} from '@angular/material/dialog';
 import { PostCommentsComponent } from './post-comments/post-comments.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { PostCommentsComponent } from './post-comments/post-comments.component';
     MatGridListModule,
     MatProgressBarModule,
     MatStepperModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthService,

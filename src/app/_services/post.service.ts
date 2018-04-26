@@ -85,6 +85,10 @@ export class PostService {
   );
   }
 
+  softDeletePost(id: string) {
+    this.getPost(id).update({"status": "deleted"});
+  }
+
   private updatePicture(upload, id) {
     this.getPost(id).update(upload);
   }

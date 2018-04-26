@@ -1,18 +1,23 @@
 <div class="post">
-  <div class="post-image" [ngStyle]="{'background-image': 'url('+ data.photoURL +')'}">
-    <mat-icon aria-label="Like" class="action-like" *ngIf="!liked" (click)="updatePostLikes(data.id, 'inc', user.uid)">favorite_border</mat-icon>
-    <mat-icon aria-label="Like" class="action-like liked" *ngIf="liked" (click)="updatePostLikes(data.id, 'dec', user.uid)">favorite</mat-icon>
+  <div class="post-content">
+    <div class="header">
+      <div class="author">
+        <div class="post-author-photo-ghost animated-background" *ngIf="!postUser"></div>
+        <div class="post-author-name-ghost animated-background" *ngIf="!postUser"></div>
+        <div class="photo" *ngIf="postUser">
+          <img src="{{ postUser?.photoURL }}" alt="profile photo">
+        </div>
+        <a [routerLink]="['profile', data.user_id]">{{ postUser?.displayName }}</a>
+        <a color="primary" class="btn-delete-post" (click)="deletePost(data.id)" *ngIf="data.user_id === (_authS.user | async)?.uid" (click)="deletePost(data.id)">
+          <mat-icon aria-label="delete">delete</mat-icon>
+        </a>
+      </div>
+      <mat-icon aria-label="Like" class="action-like" *ngIf="!liked" (click)="updatePostLikes(data.id, 'inc', user.uid)">favorite_border</mat-icon>
+      <mat-icon aria-label="Like" class="action-like liked" *ngIf="liked" (click)="updatePostLikes(data.id, 'dec', user.uid)">favorite</mat-icon>
+    </div>
+    <div class="post-image" [ngStyle]="{'background-image': 'url('+ data.photoURL +')'}"></div>
   </div>
   <div class="post-meta">
-    <div class="author">
-      <div class="photo animated-background">
-        <img src="{{ (data.user | async)?.photoURL }}" alt="profile photo">
-      </div>
-      <a [routerLink]="['profile', data.user_id]">{{ (data.user | async)?.displayName }}</a>
-      <a color="primary" class="btn-delete-post" *ngIf="data.user_id === (_authS.user | async)?.uid" (click)="deletePost(data.id)">
-        <mat-icon aria-label="delete">delete</mat-icon>
-      </a>
-    </div>
     <div class="likes">
       {{ likesCount }} likes
     </div>
